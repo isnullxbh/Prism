@@ -1,20 +1,20 @@
 find_package(Clang CONFIG REQUIRED)
 
-add_library(Prism.Core)
+add_library(Prism)
 
-set_target_properties(Prism.Core
+set_target_properties(Prism
     PROPERTIES
-        OUTPUT_NAME "Prism.Core"
+        OUTPUT_NAME "Prism"
         PREFIX      "")
 
-target_include_directories(Prism.Core
+target_include_directories(Prism
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/../include
         ${CLANG_INCLUDE_DIRS}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_sources(Prism.Core
+target_sources(Prism
     PUBLIC
         FILE_SET HEADERS
             BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../include
@@ -29,7 +29,7 @@ target_sources(Prism.Core
                 ${CMAKE_CURRENT_SOURCE_DIR}/../include/Prism/MatchCallback.hpp
                 ${CMAKE_CURRENT_SOURCE_DIR}/../include/Prism/Matchers.hpp)
 
-target_sources(Prism.Core
+target_sources(Prism
     PRIVATE
         Prism/Entities/Class.cpp
         Prism/Extractors/MatcherBasedExtractor.cpp
@@ -38,10 +38,10 @@ target_sources(Prism.Core
         Prism/EntitySet.cpp
         Prism/Extractor.cpp)
 
-target_link_libraries(Prism.Core
+target_link_libraries(Prism
     PUBLIC
         clangASTMatchers
         clangFrontend
         clangSerialization)
 
-add_library(Prism::Core ALIAS Prism.Core)
+add_library(Prism::Core ALIAS Prism)

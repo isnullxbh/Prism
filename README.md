@@ -9,6 +9,7 @@ C++ entity metadata extraction tool
 
 - CMake
 - C++ compiler with C++23 support
+- Doxygen and dot (only for generating docs)
 
 ## Features
 
@@ -27,6 +28,25 @@ C++ entity metadata extraction tool
 - Source types
   - [ ] Regular
   - [ ] Modules
+
+## Build
+
+To build Prism, go to the project's root directory and execute the following commands:
+
+```shell
+cmake -S . -B build
+cmake --build build --target Prism --parallel
+```
+
+## Documentation
+
+To generate docs, go to the project's root directory and execute the following command:
+
+```shell
+doxygen docs/Doxyfile
+```
+
+The generated documentation will be placed in the [following](docs/out) directory.
 
 ## Author
 
