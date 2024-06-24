@@ -8,8 +8,8 @@
 
 #include <gtest/gtest.h>
 
-#include <Prism/Extractors/DefaultExtractor.hpp>
-#include <Prism/MatcherSetBuilder.hpp>
+#include <Prism/Extractors/MatcherBasedExtractor.hpp>
+#include <Prism/Matchers.hpp>
 #include <Prism/Entities/Class.hpp>
 
 static const std::filesystem::path source_dir { "./sources" };
@@ -18,12 +18,8 @@ TEST(MatchClasses, SkipForwardDeclarations)
 {
     using namespace Prism;
 
-    auto matchers =
-        MatcherSetBuilder()
-            .addClassMatcher()
-            .build();
-
-    DefaultExtractor extractor { std::move(matchers) };
+    MatcherBasedExtractor extractor {};
+    extractor.addMatcher<clang::CXXRecordDecl>(class_matcher);
     const auto entity_set = extractor.extract(source_dir / "Classes" / "ForwardDeclaration.hpp");
 
     EXPECT_EQ(entity_set.size(), 1U);
@@ -34,12 +30,8 @@ TEST(MatchClasses, SkipClassTemplates)
 {
     using namespace Prism;
 
-    auto matchers =
-        MatcherSetBuilder()
-            .addClassMatcher()
-            .build();
-
-    DefaultExtractor extractor { std::move(matchers) };
+    MatcherBasedExtractor extractor {};
+    extractor.addMatcher<clang::CXXRecordDecl>(class_matcher);
     const auto entity_set = extractor.extract(source_dir / "Classes" / "Templates.hpp");
 
     EXPECT_EQ(entity_set.size(), 1U);

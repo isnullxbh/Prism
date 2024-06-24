@@ -1,10 +1,10 @@
 /**
- * @file    DefaultExtractor.cpp
+ * @file    MatcherBasedExtractor.cpp
  * @author  Oleg E. Vorobiov <isnullxbh(at)gmail.com>
  * @date    22.06.2024
  */
 
-#include <Prism/Extractors/DefaultExtractor.hpp>
+#include <Prism/Extractors/MatcherBasedExtractor.hpp>
 
 #include <algorithm>
 #include <vector>
@@ -16,19 +16,26 @@
 namespace Prism
 {
 
-DefaultExtractor::DefaultExtractor(MatcherSet matchers)
+MatcherBasedExtractor::MatcherBasedExtractor()
     : _pch_ops(std::make_shared<clang::PCHContainerOperations>())
     , _diagnostic_engine(clang::CompilerInstance::createDiagnostics(new clang::DiagnosticOptions()))
-    , _matchers(std::move(matchers))
+    , _entity_factory(std::make_unique<EntityFactory>())
 {
 }
 
-auto DefaultExtractor::extract(const std::filesystem::path& path)-> EntitySet
+MatcherBasedExtractor::MatcherBasedExtractor(std::unique_ptr<EntityFactory> factory)
+    : _pch_ops(std::make_shared<clang::PCHContainerOperations>())
+    , _diagnostic_engine(clang::CompilerInstance::createDiagnostics(new clang::DiagnosticOptions()))
+    , _entity_factory(std::move(factory))
+{
+}
+
+auto MatcherBasedExtractor::extract(const std::filesystem::path& path)-> EntitySet
 {
     return extract(path, Parameters());
 }
 
-auto DefaultExtractor::extract(const std::filesystem::path& path, const Parameters& parameters)-> EntitySet
+auto MatcherBasedExtractor::extract(const std::filesystem::path& path, const Parameters& parameters)-> EntitySet
 {
     _diagnostic_engine->Clear();
 
@@ -65,33 +72,18 @@ auto DefaultExtractor::extract(const std::filesystem::path& path, const Paramete
     }
 
     EntitySet entities {};
-    setUpCallbacks(entities);
 
     clang::ast_matchers::MatchFinder finder {};
-    addMatchersTo(finder);
+    std::vector<std::unique_ptr<clang::ast_matchers::MatchFinder::MatchCallback>> callbacks {};
+    for (auto& entry : _matcher_entries)
+    {
+        callbacks.push_back(entry.create_match_callback(entities));
+        finder.addMatcher(entry.matcher, callbacks.back().get());
+    }
+
     finder.matchAST(unit->getASTContext());
 
     return entities;
-}
-
-auto DefaultExtractor::setUpCallbacks(EntitySet& entities)-> void
-{
-    using clang::ast_matchers::DeclarationMatcher;
-
-    _matchers.for_each([&](DeclarationMatcher&, MatchCallback& callback)
-    {
-        callback.setEntitySet(entities);
-    });
-}
-
-auto DefaultExtractor::addMatchersTo(clang::ast_matchers::MatchFinder& finder)-> void
-{
-    using clang::ast_matchers::DeclarationMatcher;
-
-    _matchers.for_each([&finder](DeclarationMatcher& matcher, MatchCallback& callback)
-    {
-        finder.addMatcher(matcher, &callback);
-    });
 }
 
 } // namespace Prism
