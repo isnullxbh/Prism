@@ -6,7 +6,10 @@
 
 #pragma once
 
+#include <vector>
+
 #include <Prism/EntityBase.hpp>
+#include <Prism/ClassMembers/DataMember.hpp>
 
 namespace Prism
 {
@@ -14,12 +17,20 @@ namespace Prism
 class Class : public EntityBase
 {
 public:
+    using DataMembers = std::vector<DataMember>;
+
     explicit Class(const clang::CXXRecordDecl* declaration);
     auto kind() const noexcept -> EntityKind override;
     auto clone() const noexcept -> Class* override;
 
-protected:
+    auto dataMembers() const noexcept -> const DataMembers&;
+
+private:
     Class(const Class&) = default;
+
+    static auto extractDataMembers(const clang::CXXRecordDecl* declaration, DataMembers& members) -> void;
+
+    DataMembers _data_members {};
 };
 
 template<>

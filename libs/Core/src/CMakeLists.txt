@@ -19,8 +19,11 @@ target_sources(Prism
         FILE_SET HEADERS
             BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../include
             FILES
+                ${CMAKE_CURRENT_SOURCE_DIR}/../include/Prism/ClassMembers/DataMember.hpp
                 ${CMAKE_CURRENT_SOURCE_DIR}/../include/Prism/Entities/Class.hpp
                 ${CMAKE_CURRENT_SOURCE_DIR}/../include/Prism/Extractors/MatcherBasedExtractor.hpp
+                ${CMAKE_CURRENT_SOURCE_DIR}/../include/Prism/BaseTypes.hpp
+                ${CMAKE_CURRENT_SOURCE_DIR}/../include/Prism/ClassMember.hpp
                 ${CMAKE_CURRENT_SOURCE_DIR}/../include/Prism/Entity.hpp
                 ${CMAKE_CURRENT_SOURCE_DIR}/../include/Prism/EntityBase.hpp
                 ${CMAKE_CURRENT_SOURCE_DIR}/../include/Prism/EntityFactory.hpp
@@ -31,8 +34,10 @@ target_sources(Prism
 
 target_sources(Prism
     PRIVATE
+        Prism/ClassMembers/DataMember.cpp
         Prism/Entities/Class.cpp
         Prism/Extractors/MatcherBasedExtractor.cpp
+        Prism/BaseTypes.cpp
         Prism/EntityBase.cpp
         Prism/EntityFactory.cpp
         Prism/EntitySet.cpp

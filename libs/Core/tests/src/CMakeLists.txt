@@ -5,7 +5,8 @@ add_executable(Prism.Core.Tests)
 target_sources(Prism.Core.Tests
     PRIVATE
         main.cpp
-        Matching/MatchClasses.cpp)
+        Matching/MatchClasses.cpp
+        Entities/ClassTests.cpp)
 
 target_link_libraries(Prism.Core.Tests
     PRIVATE

@@ -35,6 +35,10 @@ public:
 
     auto addEntity(std::unique_ptr<Entity> entity) -> void;
 
+    template<typename ConcreteEntity>
+        requires std::is_base_of_v<Entity, ConcreteEntity>
+    auto getEntityWithQualifiedName(std::string_view name) const noexcept -> const ConcreteEntity*;
+
 private:
     template<typename Predicate>
         requires std::is_invocable_r_v<bool, Predicate, const Entity&>
@@ -42,8 +46,8 @@ private:
 
     template<typename ConcreteEntity, typename Predicate>
         requires std::is_base_of_v<Entity, ConcreteEntity>
-              && std::is_invocable_r_v<bool, Predicate, const Entity&>
-    auto findBy(Predicate&& predicate) const -> const Entity*;
+              && std::is_invocable_r_v<bool, Predicate, const ConcreteEntity&>
+    auto findBy(Predicate&& predicate) const -> const ConcreteEntity*;
 
 private:
     EntityListPerKind _entities {};
@@ -54,6 +58,13 @@ template<typename ConcreteEntity>
 auto EntitySet::hasEntityWithQualifiedName(std::string_view name) const noexcept-> bool
 {
     return findBy<ConcreteEntity>(Predicates::byQualifiedName(name)) != nullptr;
+}
+
+template<typename ConcreteEntity>
+    requires std::is_base_of_v<Entity, ConcreteEntity>
+auto EntitySet::getEntityWithQualifiedName(std::string_view name) const noexcept-> const ConcreteEntity*
+{
+    return findBy<ConcreteEntity>(Predicates::byQualifiedName(name));
 }
 
 template<typename Predicate>
@@ -75,17 +86,17 @@ auto EntitySet::findBy(Predicate&& predicate) const -> const Entity*
 
 template<typename ConcreteEntity, typename Predicate>
     requires std::is_base_of_v<Entity, ConcreteEntity>
-          && std::is_invocable_r_v<bool, Predicate, const Entity&>
-auto EntitySet::findBy(Predicate&& predicate) const -> const Entity*
+          && std::is_invocable_r_v<bool, Predicate, const ConcreteEntity&>
+auto EntitySet::findBy(Predicate&& predicate) const -> const ConcreteEntity*
 {
     if (_entities.contains(EntityTraits<ConcreteEntity>::kind))
     {
         const auto& entities = _entities.at(EntityTraits<ConcreteEntity>::kind);
         for (const auto& entity : entities)
         {
-            if (predicate(*entity))
+            if (predicate(static_cast<const ConcreteEntity&>(*entity)))
             {
-                return entity.get();
+                return static_cast<const ConcreteEntity*>(entity.get());
             }
         }
     }
