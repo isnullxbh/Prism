@@ -8,9 +8,10 @@
 
 #include <memory>
 
-#include <clang/AST/Decl.h>
-
 #include <Prism/Entity.hpp>
+#include <Prism/AttributeFactory.hpp>
+
+namespace clang { class Decl; }
 
 namespace Prism
 {
@@ -18,8 +19,13 @@ namespace Prism
 class EntityFactory
 {
 public:
+    EntityFactory();
+    explicit EntityFactory(std::unique_ptr<AttributeFactory> attribute_factory);
     virtual ~EntityFactory() = default;
     virtual auto create(const clang::Decl* declaration) -> std::unique_ptr<Entity>;
+
+private:
+    std::unique_ptr<AttributeFactory> _attribute_factory;
 };
 
 } // namespace Prism

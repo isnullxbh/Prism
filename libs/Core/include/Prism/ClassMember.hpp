@@ -9,11 +9,12 @@
 #include <string>
 
 #include <Prism/BaseTypes.hpp>
+#include <Prism/Declaration.hpp>
 
 namespace Prism
 {
 
-class ClassMember
+class ClassMember : public Declaration
 {
 public:
     enum class Kind
@@ -22,7 +23,6 @@ public:
         MemberFunction,
     };
 
-    virtual ~ClassMember() = default;
     virtual constexpr auto kind() const noexcept -> Kind = 0;
     virtual auto name() const noexcept -> const std::string& = 0;
     virtual auto type() const noexcept -> const std::string& = 0;

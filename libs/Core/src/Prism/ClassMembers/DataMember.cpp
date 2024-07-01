@@ -9,11 +9,17 @@
 namespace Prism
 {
 
-DataMember::DataMember(const clang::FieldDecl* declaration)
+DataMember::DataMember(const clang::FieldDecl* declaration, AttributeFactory& attribute_factory)
     : _name(declaration->getNameAsString())
     , _type(declaration->getType().getAsString())
     , _accessibility(convertToAccessibility(declaration->getAccess()))
+    , _attribute_holder(declaration, attribute_factory)
 {}
+
+auto DataMember::attributes() const noexcept -> const AttributeHolder&
+{
+    return _attribute_holder;
+}
 
 auto DataMember::name() const noexcept-> const std::string&
 {

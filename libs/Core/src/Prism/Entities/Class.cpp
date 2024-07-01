@@ -9,10 +9,10 @@
 namespace Prism
 {
 
-Class::Class(const clang::CXXRecordDecl* declaration)
-    : EntityBase(declaration)
+Class::Class(const clang::CXXRecordDecl* declaration, AttributeFactory& attribute_factory)
+    : EntityBase(declaration, attribute_factory)
 {
-    extractDataMembers(declaration, _data_members);
+    extractDataMembers(declaration, attribute_factory, _data_members);
 }
 
 auto Class::kind() const noexcept-> EntityKind
@@ -30,11 +30,11 @@ auto Class::dataMembers() const noexcept-> const DataMembers&
     return _data_members;
 }
 
-auto Class::extractDataMembers(const clang::CXXRecordDecl* declaration, DataMembers& members)-> void
+auto Class::extractDataMembers(const clang::CXXRecordDecl* declaration, AttributeFactory& factory, DataMembers& members)-> void
 {
     for (auto it = declaration->field_begin(); it != declaration->field_end(); ++it)
     {
-        members.emplace_back(*it);
+        members.emplace_back(*it, std::ref(factory));
     }
 }
 

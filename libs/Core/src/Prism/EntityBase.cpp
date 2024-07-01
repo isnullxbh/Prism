@@ -7,9 +7,15 @@
 #include <Prism/EntityBase.hpp>
 
 #include <clang/AST/ASTContext.h>
+#include <clang/AST/DeclCXX.h>
 
 namespace Prism
 {
+
+auto EntityBase::attributes() const noexcept -> const AttributeHolder&
+{
+    return _attributes_holder;
+}
 
 auto EntityBase::name() const noexcept-> const std::string&
 {
@@ -26,9 +32,10 @@ auto EntityBase::location() const noexcept-> const std::filesystem::path&
     return _location;
 }
 
-EntityBase::EntityBase(const clang::NamedDecl* declaration)
+EntityBase::EntityBase(const clang::NamedDecl* declaration, AttributeFactory& attribute_factory)
     : _name(declaration->getName())
     , _qualified_name(declaration->getQualifiedNameAsString())
+    , _attributes_holder(declaration, attribute_factory)
 {
     const auto& source_manager = declaration->getASTContext().getSourceManager();
     _location = declaration->getLocation().printToString(source_manager);

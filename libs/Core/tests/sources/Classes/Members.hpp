@@ -12,13 +12,19 @@ namespace N1
     class T2 {};
 }
 
-class Class
+class [[clang::annotate("Class1")]] Class
 {
 public:
+    [[clang::annotate("Field1")]]
     int                 m1;
+
+    [[clang::annotate("Field2")]]
     static const N1::T1 m2;
 
 private:
+    [[clang::annotate("Field3")]]
     N1::T2              m3;
+
+    [[clang::annotate("Field4")]]
     static const int    m4;
 };

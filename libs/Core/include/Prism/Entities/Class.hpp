@@ -10,6 +10,7 @@
 
 #include <Prism/EntityBase.hpp>
 #include <Prism/ClassMembers/DataMember.hpp>
+#include <Prism/AttributeFactory.hpp>
 
 namespace Prism
 {
@@ -19,7 +20,7 @@ class Class : public EntityBase
 public:
     using DataMembers = std::vector<DataMember>;
 
-    explicit Class(const clang::CXXRecordDecl* declaration);
+    explicit Class(const clang::CXXRecordDecl* declaration, AttributeFactory& attribute_factory);
     auto kind() const noexcept -> EntityKind override;
     auto clone() const noexcept -> Class* override;
 
@@ -28,7 +29,7 @@ public:
 private:
     Class(const Class&) = default;
 
-    static auto extractDataMembers(const clang::CXXRecordDecl* declaration, DataMembers& members) -> void;
+    static auto extractDataMembers(const clang::CXXRecordDecl* declaration, AttributeFactory& factory, DataMembers& members) -> void;
 
     DataMembers _data_members {};
 };

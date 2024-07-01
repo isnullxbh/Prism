@@ -10,6 +10,8 @@
 #include <string>
 #include <string_view>
 
+#include <Prism/Declaration.hpp>
+
 namespace Prism
 {
 
@@ -24,10 +26,9 @@ enum class EntityKind
     TypeAliasTemplate,
 };
 
-class Entity
+class Entity : public Declaration
 {
 public:
-    virtual ~Entity() = default;
     virtual auto kind() const noexcept -> EntityKind = 0;
     virtual auto name() const noexcept -> const std::string& = 0;
     virtual auto qualifiedName() const noexcept -> const std::string& = 0;
