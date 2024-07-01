@@ -15,6 +15,9 @@ namespace clang { class NamedDecl; }
 namespace Prism
 {
 
+/// Implements the part of the Entity interface which is same for all entities.
+/// @ingroup PrismCore
+/// @since   0.1.0
 class EntityBase : public Entity
 {
 public:
@@ -24,13 +27,17 @@ public:
     auto location() const noexcept -> const std::filesystem::path& final;
 
 protected:
+    /// Constructor.
+    /// Retrieves attributes applied to the entity.
+    /// @param declaration       Entity declaration.
+    /// @param attribute_factory Attribute factory.
     explicit EntityBase(const clang::NamedDecl* declaration, AttributeFactory& attribute_factory);
 
 private:
-    std::string            _name;
-    std::string            _qualified_name;
-    std::filesystem::path  _location;
-    DefaultAttributeHolder _attributes_holder;
+    std::string            _name;               ///< Name.
+    std::string            _qualified_name;     ///< Qualified name.
+    std::filesystem::path  _location;           ///< Location.
+    DefaultAttributeHolder _attributes_holder;  ///< Attributes.
 };
 
 } // namespace Prism

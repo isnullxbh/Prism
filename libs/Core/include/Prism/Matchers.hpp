@@ -11,6 +11,9 @@
 namespace Prism
 {
 
+/// Matcher for classes.
+/// @ingroup PrismCoreMatchers
+/// @since   0.1.0
 inline const auto class_matcher =
     clang::ast_matchers::cxxRecordDecl(
         // Skip primary class template

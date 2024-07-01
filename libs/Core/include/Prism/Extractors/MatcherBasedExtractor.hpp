@@ -27,17 +27,22 @@ namespace Prism
 class MatcherBasedExtractor : public Extractor
 {
 private:
+    /// Type of function used to create match callback.
     using MatchCallbackCreator = std::function<std::unique_ptr<clang::ast_matchers::MatchFinder::MatchCallback>(EntitySet&)>;
 
+    /// Contains matcher, it's ID and function used to create corresponding match callback.
     struct MatcherEntry
     {
-        std::string                             id;
-        clang::ast_matchers::DeclarationMatcher matcher;
-        MatchCallbackCreator                    create_match_callback;
+        std::string                             id;                     ///< ID.
+        clang::ast_matchers::DeclarationMatcher matcher;                ///< Matcher.
+        MatchCallbackCreator                    create_match_callback;  ///< Function used to create match callback.
     };
 
+    /// A type of matcher entry list.
     using MatcherEntries = std::vector<MatcherEntry>;
 
+    /// A match callback for the speicifed declaration type.
+    /// @tparam Declaration
     template<typename Declaration>
     class Callback;
 
@@ -45,14 +50,29 @@ public:
     using Extractor::Parameters;
     using BindableDeclarationMatcher = clang::ast_matchers::internal::BindableMatcher<clang::Decl>;
 
+    /// Constructs extractor with the default entity factory.
     MatcherBasedExtractor();
+
+    /// Constructs extractor with the specified entity factory.
+    /// @param factory Entity factory.
     explicit MatcherBasedExtractor(std::unique_ptr<EntityFactory> factory);
 
+    /// Adds the specified matcher to the extractor.
+    /// @tparam Declaration A declaration type compatible with the specified matcher.
+    /// @param  matcher     Matcher.
     template<typename Declaration>
         requires std::is_base_of_v<clang::NamedDecl, Declaration>
     auto addMatcher(BindableDeclarationMatcher matcher) -> void;
 
+    /// Extracts entities from source file with the specified path.
+    /// @param  path Source file path.
+    /// @return An entity set.
     auto extract(const std::filesystem::path& path) -> EntitySet override;
+
+    /// Extracts entities from source file with the specifeid path according to the specified parameters.
+    /// @param  path       Source file path.
+    /// @param  parameters Extraction parameters.
+    /// @return An entity set.
     auto extract(const std::filesystem::path& path, const Parameters& parameters) -> EntitySet override;
 
 private:

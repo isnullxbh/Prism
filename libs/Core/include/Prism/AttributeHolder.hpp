@@ -17,23 +17,45 @@ namespace clang { class Decl; }
 namespace Prism
 {
 
+/// A base class for classes providing information about attributes.
+/// @ingroup PrismCore
+/// @since   0.1.0
 class AttributeHolder
 {
 public:
+    /// Destructor.
     virtual ~AttributeHolder() = default;
 
+    /// Gets a list of all attributes.
+    /// @return A sequence of attributes.
     virtual auto getAll() const noexcept -> Slice<const Attribute> = 0;
 
+    /// Check if holder contains attribute of the specified type and it meets the specified predicate.
+    /// @tparam ConcreteAttribute Attribute type.
+    /// @tparam Predicate         Predicate type.
+    /// @param  predicate         Predicate.
+    /// @return If holder contains attribute that meets the specified criteria - true, otherwise - false.
     template<typename ConcreteAttribute, typename Predicate>
-        requires std::is_base_of_v<Attribute, ConcreteAttribute> &&
-        std::is_invocable_r_v<bool, Predicate, const ConcreteAttribute&>
+        requires std::is_base_of_v<Attribute, ConcreteAttribute>
+              && std::is_invocable_r_v<bool, Predicate, const ConcreteAttribute&>
     auto contains(Predicate&& predicate) const -> bool;
 
+    /// Finds attribute of the specified type that meets the specified predicate.
+    /// @tparam ConcreteAttribute Attribute type.
+    /// @tparam Predicate         Predicate type.
+    /// @param  predicate         Predicate.
+    /// @return If holder contains attribute that meets the specified criteria - a pointer to attribute,
+    ///         otherwise - false.
     template<typename ConcreteAttribute, typename Predicate>
-        requires std::is_base_of_v<Attribute, ConcreteAttribute> &&
-        std::is_invocable_r_v<bool, Predicate, const ConcreteAttribute&>
+        requires std::is_base_of_v<Attribute, ConcreteAttribute>
+              && std::is_invocable_r_v<bool, Predicate, const ConcreteAttribute&>
     auto find(Predicate&& predicate) const -> const ConcreteAttribute*;
 
+    /// Finds all attributes of the specified type that meet the specified predicate.
+    /// @tparam ConcreteAttribute Attribute type.
+    /// @tparam Predicate         Predicate type.
+    /// @param  predicate         Predicate.
+    /// @return A list of found attributes.
     template<typename ConcreteAttribute, typename Predicate>
         requires std::is_base_of_v<Attribute, ConcreteAttribute> &&
         std::is_invocable_r_v<bool, Predicate, const ConcreteAttribute&>

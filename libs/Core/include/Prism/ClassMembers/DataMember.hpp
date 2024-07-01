@@ -14,9 +14,15 @@
 namespace Prism
 {
 
+/// Class data member.
+/// @ingroup PrismCore
+/// @since   0.1.0
 class DataMember : public ClassMember
 {
 public:
+    /// Constructs data member from the specified declaration.
+    /// @param declaration       Data member declaration.
+    /// @param attribute_factory Attribute factory.
     explicit DataMember(const clang::FieldDecl* declaration, AttributeFactory& attribute_factory);
 
     auto attributes() const noexcept -> const AttributeHolder& final;
@@ -26,10 +32,10 @@ public:
     auto accessibility() const noexcept -> Accessibility final;
 
 private:
-    std::string            _name;
-    std::string            _type;
-    Accessibility          _accessibility;
-    DefaultAttributeHolder _attribute_holder;
+    std::string            _name;             ///< Name.
+    std::string            _type;             ///< Type in human-readable representation.
+    Accessibility          _accessibility;    ///< Access specifier.
+    DefaultAttributeHolder _attribute_holder; ///< Attributes.
 };
 
 } // namespace Prism
