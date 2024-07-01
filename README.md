@@ -5,6 +5,8 @@ C++ entity metadata extraction tool
 ![status](https://badgen.net/static/status/dev/yellow)
 ![status](https://badgen.net/static/c++/23/green)
 
+<img src="assets/logo.svg" alt="logo">
+
 ## Prerequisites
 
 - CMake

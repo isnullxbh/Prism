@@ -1,0 +1,23 @@
+<svg width="480.00000000000006" height="280" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <line fill="none" x1="59.22017" y1="98.41223" x2="116.36541" y2="138.55231" id="svg_36" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#b2b2b2"/>
+  <line fill="none" x1="264.51165" y1="146.40197" x2="379.49782" y2="146.40146" id="svg_39" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#b2b2b2"/>
+  <line fill="none" x1="256.55315" y1="131.12027" x2="342.72069" y2="121.01774" id="svg_42" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#b2b2b2"/>
+  <line transform="rotate(110 272.771 243.855)" fill="none" x1="272.77087" y1="161.29726" x2="272.77087" y2="326.41249" id="svg_32" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#999999" stroke-dasharray="5,5"/>
+  <line fill="none" x1="194.81968" y1="2.7416" x2="194.81968" y2="215.3902" id="svg_33" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#999999" stroke-dasharray="5,5"/>
+  <line transform="rotate(90 194.85 272.687)" fill="none" stroke="#666666" x1="194.84965" y1="116.68666" x2="194.84965" y2="428.68666" id="svg_29" stroke-linejoin="undefined" stroke-linecap="undefined"/>
+  <line transform="rotate(70 117.219 243.934)" fill="none" x1="117.21916" y1="160.89064" x2="117.21916" y2="326.97712" id="svg_34" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#999999" stroke-dasharray="5,5"/>
+  <line transform="rotate(30 116.989 137.803)" fill="none" stroke="#666666" x1="116.98883" y1="-18.19731" x2="116.98883" y2="293.80269" id="svg_30" stroke-linejoin="undefined" stroke-linecap="undefined"/>
+  <line fill="none" x1="127.08267" y1="146.36988" x2="256.02837" y2="131.25191" id="svg_43" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#b2b2b2" stroke-dasharray="2,2"/>
+  <line fill="none" x1="127.30153" y1="146.42031" x2="264.10095" y2="146.41971" id="svg_44" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#b2b2b2" stroke-dasharray="2,2"/>
+  <line transform="rotate(-30 272.735 137.795)" fill="none" stroke="#666666" x1="272.73473" y1="-18.20498" x2="272.73473" y2="293.79502" id="svg_45" stroke-linejoin="undefined" stroke-linecap="undefined"/>
+  <line fill="none" x1="116.90082" y1="138.91179" x2="127.8055" y2="146.57148" id="svg_46" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#b2b2b2" stroke-dasharray="2,2"/>
+  <text transform="rotate(35 36.4357 79.8611)" fill="#000000" stroke="#b2b2b2" x="7.63556" y="88.46764" id="svg_47" stroke-width="0" font-size="24" font-family="'JetBrains Mono'" text-anchor="start" xml:space="preserve">.hpp</text>
+  <text transform="rotate(-2 376.874 134.246)" fill="#000000" stroke="#b2b2b2" x="367.87326" y="137.86312" id="svg_49" stroke-width="0" font-size="10" font-family="'JetBrains Mono'" text-anchor="start" xml:space="preserve">...</text>
+  <text transform="rotate(-5 365.422 116.783)" fill="#000000" stroke="#b2b2b2" x="344.42288" y="120.40007" id="svg_50" stroke-width="0" font-size="10" font-family="'JetBrains Mono'" text-anchor="start" xml:space="preserve">classes</text>
+  <text fill="#000000" stroke="#b2b2b2" x="380.34686" y="148.83989" id="svg_51" stroke-width="0" font-size="10" font-family="'JetBrains Mono'" text-anchor="start" xml:space="preserve">class templates</text>
+  <text transform="rotate(-3 383.894 127.261)" fill="#000000" stroke="#b2b2b2" x="356.89648" y="130.8779" id="svg_52" stroke-width="0" font-size="10" font-family="'JetBrains Mono'" text-anchor="start" xml:space="preserve">functions</text>
+ </g>
+
+</svg>
